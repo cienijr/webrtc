@@ -112,14 +112,14 @@ bool VoiceProcessingAudioUnit::Init() {
     return false;
   }
 
-  // Enable output on the output scope of the output element.
-  UInt32 enable_output = 1;
+  // Disable output on the output scope of the output element.
+  UInt32 enable_output = 0;
   result = AudioUnitSetProperty(vpio_unit_, kAudioOutputUnitProperty_EnableIO,
                                 kAudioUnitScope_Output, kOutputBus,
                                 &enable_output, sizeof(enable_output));
   if (result != noErr) {
     DisposeAudioUnit();
-    RTCLogError(@"Failed to enable output on output scope of output element. "
+    RTCLogError(@"Failed to disable output on output scope of output element. "
                  "Error=%ld.",
                 (long)result);
     return false;
@@ -434,8 +434,9 @@ OSStatus VoiceProcessingAudioUnit::NotifyGetPlayoutData(
     UInt32 bus_number,
     UInt32 num_frames,
     AudioBufferList* io_data) {
-  return observer_->OnGetPlayoutData(flags, time_stamp, bus_number, num_frames,
-                                     io_data);
+  return noErr;
+//   return observer_->OnGetPlayoutData(flags, time_stamp, bus_number, num_frames,
+//                                      io_data);
 }
 
 OSStatus VoiceProcessingAudioUnit::NotifyDeliverRecordedData(
