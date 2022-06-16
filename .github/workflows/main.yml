@@ -32,7 +32,7 @@ jobs:
       - run: git -C depot_tools cherry-pick FETCH_HEAD
       - run: gclient sync --deps=ios,mac --no-history --shallow
 
-      - run: src/tools_webrtc/ios/build_ios_libs.py --arch arm64 x64 --bitcode --extra-gn-args rtc_build_examples=false rtc_enable_symbol_export=true
+      - run: src/tools_webrtc/ios/build_ios_libs.py --arch arm64 arm x64 x86 --bitcode --extra-gn-args rtc_build_examples=false rtc_enable_symbol_export=true
 
       - run: zip -q -r --symlinks WebRTC.xcframework.zip WebRTC.xcframework
         working-directory: src/out_ios_libs
